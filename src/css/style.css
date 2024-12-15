@@ -34,6 +34,9 @@ body {
 }
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: var(--color-dark);
   z-index: 1;
 }
@@ -78,22 +81,20 @@ body {
   list-style-type: none;
 }
 
-.filtros-list li.active {
+.filtros-list li:hover {
   color: var(--color-text);
-  border-radius: 8px;
 }
 
 .currentMusic {
-  height: 300px;
+  height: 286px;
   background: var(--color-background);
-  margin-top: 79%;
 }
 
 .main-content {
   background-color: var(--color-background);
   z-index: 2;
-  box-shadow: -4px 0 5px rgb(0 0 0 / 50%);
-  height: inherit;
+  box-shadow: -4px 0 10px black;
+  height: 98%;
 }
 
 .button-container {
@@ -106,15 +107,23 @@ body {
 }
 
 .add-button>box-icon:hover {
-  height: 36px;
-  width: 36px;
+  transform: scale(1.2);
+}
+
+#boton-close {
+  transform: scale(1.5);
+}
+
+#boton-close:hover {
+  transform: scale(2);
 }
 
 .top-bar {
+  height: 16%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 32px;
+  padding: 23px 21px;
 }
 
 .search-container {
@@ -157,10 +166,20 @@ body {
   margin: 8px;
 }
 
+.pauseAdd {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .user-controls {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.pauseAdd>button {
+  width: 88px;
 }
 
 .pause-button,
@@ -175,12 +194,11 @@ body {
   cursor: pointer;
 }
 
-.pause-button:hover {
-  width: 100px;
-}
-
-#addMusicForm>button:hover {
-  width: 100px;
+.pause-button:hover,
+.upload-button:hover,
+#add-button>box-icon:hover {
+  transform: scale(1.2);
+  transition: transform 0.8s ease;
 }
 
 h1 {
@@ -191,14 +209,13 @@ h1 {
 }
 
 .player {
-  grid-row: 2;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 5;
   background-color: var(--color-background);
-  box-shadow: 0px -5px 5px rgb(0 0 0 / 50%);
+  box-shadow: 0px 0px 25px black;
 }
 
 .player-content {
@@ -214,13 +231,21 @@ h1 {
   align-items: center;
 }
 
+
+
 .songs-header {
   display: grid;
   grid-template-columns: 50px 1fr 1fr 80px 50px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0px -5px 5px rgb(0 0 0 / 50%);
   padding: 8px 16px;
   gap: 18px;
+  height: 7%;
+}
+
+.main-content-list {
+  box-shadow: 0px -5px 100px black;
+  height: 84%;
+  background: var(--color-surface);
 }
 
 .songs-header span {
@@ -240,7 +265,7 @@ h1 {
 }
 
 .song-item.selected {
-  background-color: var(--color-surface);
+  background-color: var(--color-dark);
 }
 
 
@@ -250,8 +275,8 @@ h1 {
   white-space: nowrap;
 }
 
-.song-item .play-icon,
-.song-item .favorite-icon {
+.play-icon,
+.favorite-icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -269,19 +294,17 @@ h1 {
   cursor: pointer;
 }
 
-.song-item .play-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.play-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #1db954;
   opacity: 0;
-  /* Hide by default */
-  transition: opacity 0.2s ease;
-  /* Smooth transition */
+  transition: opacity 0.8s ease;
 }
 
 .song-item:hover .play-icon {
   opacity: 1;
-  /* Show on hover */
 }
 
 .song-item:hover {
@@ -289,11 +312,15 @@ h1 {
 }
 
 .song-info {
-  padding: 8px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
 }
 
 #coverInfo {
-  height: 246px;
+  height: 260px;
   width: 260px;
 }
 
@@ -335,27 +362,19 @@ h1 {
 
 .control-button:hover {
   transform: scale(1.2);
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
 .control-button.active {
-  background-color: rgba(29, 185, 84, 0.2);
   border-radius: 50%;
 }
 
-.control-button box-icon {
-  color: #ffffff;
-  /* Color por defecto (blanco) */
-}
-
-.control-button.active box-icon {
-  color: var(--color-primary);
-  /* Color activo (verde) */
-}
-
-
 .play-button {
   font-size: 32px;
+}
+
+.play-button:hover {
+  transform: scale(1.3);
 }
 
 .progress-container {
@@ -366,7 +385,7 @@ h1 {
 }
 
 .time {
-  color: var(--color-text-secondary);
+  color: var(--color-text);
   font-size: 12px;
   min-width: 35px;
 }
@@ -412,29 +431,50 @@ h1 {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: 5;
   padding-top: 100px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
+  animation: modal-animation 1s ease-in-out;
 }
 
-/* Modal Content */
 .modal-content {
-  background-color: rgb(243, 247, 243);
+  background-color: #f3f3f3;
   margin: auto;
-  padding: 20px;
+  padding: 6px;
   border: 1px solid var(--color-primary);
   border-radius: 12px;
   width: 720px;
-  z-index: 1001;
 }
 
-/* The Close Button */
+.modal-body {
+  padding: 8px;
+}
+
+@keyframes modal-animation {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(0.85);
+  }
+
+  100% {
+    transform: scale(1);
+    /* Termina en el tamaño final */
+  }
+}
+
 .close {
   color: #aaaaaa;
   float: right;
@@ -457,7 +497,7 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 75%;
   margin: 0 auto;
 }
 
@@ -485,9 +525,9 @@ label {
 }
 
 .scrollY {
-  height: 430px;
   overflow-y: auto;
   padding: 10px;
+  height: 93%;
 }
 
 /* Estilos para la scrollbar en todos los navegadores */
@@ -504,24 +544,9 @@ label {
   border-radius: 4px;
 }
 
-@media (width < 720px) {
-
-  .app-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-}
-
-@media (width > 1000) {
-  .currentMusic {
-    margin-top: 146%;
-  }
-}
-
-.play-button:hover {
-  transform: scale(1.3);
-  /* Un poco más grande para el botón de play/pause */
+#musicFile,
+#coverImage {
+  color: #f3f3f3;
 }
 
 .progress-bar::-webkit-progress-value {
@@ -530,4 +555,176 @@ label {
 
 .error-message {
   color: red;
+}
+
+@media (min-width: 367px) and (max-width: 720px) {
+
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    width: 100%;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: 43%;
+  }
+
+  .main-content {
+    width: 100%;
+    height: 57%;
+  }
+
+  .main-content-list {
+    height: 100%;
+  }
+
+  .player {
+    height: 10%;
+  }
+
+  .song-info {
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .top-bar {
+    display: none;
+  }
+
+  .user-controls {
+    display: none;
+  }
+
+  .volume-controls {
+    display: none;
+  }
+
+  .add-button {
+    display: none;
+  }
+
+  .center-controls {
+    gap: 0;
+  }
+
+  .player-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  .song-item.selected {
+    background-color: var(--color-background);
+  }
+
+  .scrollY {
+    padding: 0;
+    height: 90%;
+  }
+
+  .songs-header {
+    grid-template-columns: 10px 1fr 1fr 70px 50px;
+    height: 10%;
+  }
+
+  .song-item {
+    grid-template-columns: 28px 1fr 1fr 80px 50px;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+    width: 100%;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: 61%;
+  }
+
+  .main-content {
+    width: 100%;
+    height: 54%;
+  }
+
+  .main-content-list {
+    height: 100%;
+  }
+
+  .player {
+    height: 14%;
+    box-shadow: none;
+  }
+
+  .song-info {
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #coverInfo {
+    height: 200px;
+    width: 200px;
+  }
+
+  .top-bar {
+    display: none;
+  }
+
+  .user-controls {
+    display: none;
+  }
+
+  .volume-controls {
+    display: none;
+  }
+
+  .add-button {
+    display: none;
+  }
+
+  .center-controls {
+    gap: 0;
+  }
+
+  .player-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  .song-item.selected {
+    background-color: var(--color-background);
+  }
+
+  .scrollY {
+    padding: 0;
+    height: 84%;
+  }
+
+  .songs-header {
+    grid-template-columns: 10px 1fr 1fr 70px 50px;
+    height: 15%;
+  }
+
+  .song-item {
+    grid-template-columns: 28px 1fr 1fr 80px 50px;
+  }
+
 }

@@ -20,6 +20,8 @@ const prevButton = document.querySelector('.prev-button');
 const randomButton = document.querySelector('.random-button');
 const loopButton = document.querySelector('.loop-button');
 const filterLinks = document.querySelectorAll('.filtros-list li');
+const controlButtons = document.querySelectorAll('.control-button');
+const colorPrimaryIcons = document.querySelectorAll('.colorPrimary');
 
 // Define la URL de la API para obtener las canciones.
 const songsAPI = 'http://informatica.iesalbarregas.com:7008/songs';
@@ -183,19 +185,21 @@ function createSongItem(song) {
   // Crea un nuevo elemento div para la canción.
   const songItem = document.createElement('div');
   songItem.classList.add('song-item');
+
   // Almacena los datos de la canción como un JSON
   songItem.dataset.songData = JSON.stringify(song);
 
-  // Crea un elemento span para el icono de reproducción.
-  const playIconSpan = document.createElement('span');
-  playIconSpan.classList.add('play-icon');
+  // Crea un nuevo elemento div para el icono de reproducción.
+  const playIconDiv = document.createElement('div');
+  playIconDiv.classList.add('play-icon');
 
   // Crea un elemento box-icon para el icono de reproducción.
   const playIcon = document.createElement('box-icon');
-  playIcon.setAttribute('name', 'play-circle');
-  playIcon.setAttribute('color', '#1db954');
-  playIcon.setAttribute('class', 'playSong');
-  playIconSpan.appendChild(playIcon);
+  playIcon.setAttribute('name', 'play');
+  playIcon.setAttribute('color', '#ffffff');
+
+  // Agrega el icono de Boxicons al div.
+  playIconDiv.appendChild(playIcon);
 
   // Crea elementos span para el título, artista y duración de la canción.
   const titleSpan = document.createElement('span');
@@ -211,6 +215,7 @@ function createSongItem(song) {
 
   // Crea un objeto Audio para obtener la duración de la canción.
   const audio = new Audio(song.filepath);
+
   audio.addEventListener('loadedmetadata', () => {
     // Cuando los metadatos del audio se cargan, formatea la duración y la establece en el span.
     durationSpan.textContent = formatTime(audio.duration);
@@ -227,6 +232,7 @@ function createSongItem(song) {
 
   // Obtiene la lista de canciones favoritas del localStorage.
   const favoriteSongs = JSON.parse(localStorage.getItem('favoriteSongs') || '[]');
+
   // Verifica si la canción actual está en la lista de favoritos.
   const isFavorite = isSongFavorite(song, favoriteSongs);
 
@@ -270,6 +276,7 @@ function createSongItem(song) {
 
     // Guarda la lista actualizada de favoritos en el localStorage.
     localStorage.setItem('favoriteSongs', JSON.stringify(favoriteSongs));
+
     // Actualiza la lista de canciones filtradas (función definida en otro lugar).
     updateFilteredSongList();
   });
@@ -277,15 +284,19 @@ function createSongItem(song) {
   favSpan.appendChild(fav); // Agrega el icono de favorito al span.
 
   // Agrega los elementos creados al elemento de la canción.
-  songItem.append(playIconSpan, titleSpan, artistSpan, durationSpan, favSpan);
+  songItem.append(playIconDiv, titleSpan, artistSpan, durationSpan, favSpan);
 
   // Agrega un event listener al elemento de la canción para seleccionar la canción.
   songItem.addEventListener('click', () => selectSong(song));
 
   // Agrega un event listener al icono de reproducción para reproducir la canción.
-  playIconSpan.addEventListener('click', (e) => {
+  songItem.addEventListener('click', () => {
     selectSong(song);
-    playSong(song);
+    playSong(song);  // reproducir automáticamente al seleccionar la canción
+  });
+
+  playIconDiv.addEventListener('click', (e) => {
+    e.stopPropagation();
   });
 
   return songItem; // Devuelve el elemento de la canción creado.
@@ -441,11 +452,19 @@ function playSong(song) {
   currentAudio.volume = volume;
 }
 
-// Actualiza el icono del botón de reproducción/pausa
+// Actualiza el icono del botón de reproducción/pausa y su texto
 function updatePlayPauseButton(playing) {
   // Selecciona el elemento <box-icon> dentro del botón de reproducción
-  playButton.querySelector('box-icon').setAttribute('name', playing ? 'pause-circle' : 'play-circle');
-  // Si 'playing' es verdadero, establece el atributo 'name' a 'pause-circle', de lo contrario a 'play-circle'
+  const playButtonIcon = playButton.querySelector('box-icon');
+  playButtonIcon.setAttribute('name', playing ? 'pause-circle' : 'play-circle');
+
+  // Selecciona el elemento del botón de pausa superior
+  const pauseTopButton = document.querySelector('.pause-button');
+
+  if (pauseTopButton) {
+    // Cambia el texto del botón
+    pauseTopButton.textContent = playing ? 'PAUSE' : 'PLAY';
+  }
 }
 
 // Formatea el tiempo en segundos a formato mm:ss
@@ -745,13 +764,18 @@ function fetchSongs() {
     });
 }
 
-// Eventos para cambiar el color de los iconos al pasar el ratón
-document.querySelectorAll('.control-button').forEach(button => {
-  const boxIcon = button.querySelector('box-icon'); // Selecciona el icono dentro del botón
-  button.addEventListener('mouseover', () => boxIcon && boxIcon.setAttribute('color', '#1db954')); // Cambia el color al pasar el ratón
-  button.addEventListener('mouseout', () => boxIcon && boxIcon.setAttribute('color', '#ffffff')); // Restaura el color al quitar el ratón
-});
+// Recorre cada icono con la clase 'colorPrimary'
+colorPrimaryIcons.forEach(icon => {
+  // Encuentra el botón padre del icono
+  const parentButton = icon.closest('.control-button');
 
-function updateIcon(icon, isActive) { // Función para actualizar el color de un icono
-  icon.style.color = isActive ? '#1db954' : '#ffffff'; // Verde para activo, blanco para inactivo
-}
+  // Agrega un event listener al botón padre
+  parentButton.addEventListener('click', () => {
+    // Verifica si el botón padre tiene la clase 'active'
+    if (parentButton.classList.contains('active')) {
+      icon.setAttribute('color', '#ffffff'); // Cambia el color a blanco
+    } else {
+      icon.setAttribute('color', 'var(--color-primary)'); // Cambia el color a 'color-primary'
+    }
+  });
+});

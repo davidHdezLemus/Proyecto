@@ -14,19 +14,22 @@
 <body>
   <div class="app-container">
     <div class="sidebar">
-      <div class="window-controls">
-        <div class="control-dot"></div>
-        <div class="control-dot"></div>
-        <div class="control-dot"></div>
-      </div>
+      <div>
+        <div class="window-controls">
+          <div class="control-dot"></div>
+          <div class="control-dot"></div>
+          <div class="control-dot"></div>
+        </div>
 
-      <details class="filtros-container">
-        <summary>Filtros</summary>
-        <ul class="filtros-list">
-          <li><strong>Todas</strong></li>
-          <li><strong>Favoritas</strong></li>
-        </ul>
-      </details>
+        <details class="filtros-container">
+          <summary>Filtros</summary>
+          <ul class="filtros-list">
+            <li><strong>Todas</strong></li>
+            <li><strong>Favoritas</strong></li>
+          </ul>
+        </details>
+
+      </div>
       <div class="currentMusic"></div>
     </div>
 
@@ -40,7 +43,7 @@
         <div class="user-controls">
           <div id="user" style="font-weight: bold;"><img id="imgUser" src="./src/images/perfil.png" alt="Usuario"><span
               class="userMargin">Usuario</span></div>
-          <div>
+          <div class="pauseAdd">
             <button class="pause-button">PAUSE</button>
             <button id="add-button" class="add-button"><box-icon name='add-to-queue' type='solid'
                 color='#ffffff'></box-icon></box-icon></box-icon></button>
@@ -48,7 +51,7 @@
         </div>
       </div>
 
-      <div class="main-content">
+      <div class="main-content-list">
         <div class="songs-header">
           <span></span>
           <span>TÍTULO</span>
@@ -74,7 +77,7 @@
       <div class="center-controls">
         <div class="player-controls">
           <button class="control-button loop-button" id="loopButton">
-            <box-icon name='repeat' color='#ffffff'></box-icon>
+            <box-icon class="colorPrimary" name='repeat' color='#ffffff'></box-icon>
           </button>
           <button class="control-button prev-button">
             <box-icon name='skip-previous' color='#ffffff'></box-icon>
@@ -86,7 +89,7 @@
             <box-icon name='skip-next' color='#ffffff'></box-icon>
           </button>
           <button class="control-button random-button" id="shuffleButton">
-            <box-icon name='shuffle' color='#ffffff'></box-icon>
+            <box-icon class="colorPrimary" name='shuffle' color='#ffffff'></box-icon>
           </button>
         </div>
         <div class="progress-container">
@@ -112,7 +115,7 @@
 
       <div class="modal-body">
         <form id="addMusicForm">
-          <label for="musicFile">Seleccionar archivo de música</label>
+          <label for="musicFile">Añadir nueva canción</label>
           <input type="file" id="musicFile" name="musicFile" accept="audio/mp3">
 
           <label for="title">Título</label>
