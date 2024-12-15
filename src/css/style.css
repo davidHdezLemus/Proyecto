@@ -273,10 +273,9 @@ body {
   width: 150px;
   height: 9px;
   background-color: var(--color-text-secondary);
-  border-radius: 2px;
+  border-radius: 15px;
   position: relative;
   cursor: pointer;
-  border-radius: 5px;
 }
 
 .volume-bar-fill {
