@@ -361,7 +361,6 @@ body {
   width: 100%;
   height: 100%;
   overflow: auto;
-  animation: modal-animation 1s ease-in-out;
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -372,6 +371,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 0 10px var(--color-primary);
   width: 720px;
+  animation: modal-animation 1s ease-in-out;
 }
 
 .modal-body {
