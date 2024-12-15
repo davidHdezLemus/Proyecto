@@ -101,17 +101,18 @@ body {
 
 .main-content-list {
   box-shadow: 0px -5px 100px black;
-  height: 84%;
+  height: 87%;
   background: var(--color-surface);
 }
 
 .songs-header {
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 80px 50px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 8px 16px;
+  grid-template-columns: 55px 1fr 1fr 70px 261px;
+  border-bottom: 1px solid var(--color-background);
+  padding: 16px 16px;
   gap: 18px;
-  height: 7%;
+  height: 8%;
+  margin: 0px 25px 0px 25px
 }
 
 .songs-header span {
@@ -145,12 +146,21 @@ body {
   align-items: center;
 }
 
-.song-info {
+.currentMusic>.song-info {
   padding: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
+  flex-direction: column;
+}
+
+.current-song>.song-info {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-direction: column;
 }
 
 #coverInfo {
@@ -166,6 +176,12 @@ body {
 .artist-name {
   color: var(--color-text-secondary);
   font-size: 12px;
+}
+
+.song-name,
+.artist-name,
+.selected span {
+  text-shadow: 3px 3px 0px black;
 }
 
 .center-controls {
@@ -226,14 +242,18 @@ body {
 
 .progress-bar {
   flex-grow: 1;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  height: 9px;
+  background: var(--color-text-secondary);
   position: relative;
+  cursor: pointer;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .progress-bar::-webkit-progress-value {
   background-color: var(--color-dark);
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .volume-controls {
@@ -250,17 +270,18 @@ body {
 }
 
 .volume-bar {
-  width: 100px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 150px;
+  height: 9px;
+  background-color: var(--color-text-secondary);
   border-radius: 2px;
   position: relative;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .volume-bar-fill {
   height: 100%;
-  background-color: var(--color-dark);
+  background: var(--color-dark);
   border-radius: 2px;
   width: 50%;
 }
@@ -268,15 +289,24 @@ body {
 /* Elementos de la lista de canciones */
 .song-item {
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 80px 50px;
+  grid-template-columns: 65px 1fr 1fr 82px 261px;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--color-background);
+  margin: 0px 16px 0px 16px;
+}
+
+.songs-header>span {
+  font-size: 1.1rem;
+}
+
+.song-item:hover {
+  background-color: var(--color-dark);
 }
 
 .song-item.selected {
-  background-color: var(--color-dark);
+  background-color: var(--color-background);
 }
 
 .song-item span {
@@ -318,7 +348,7 @@ body {
 }
 
 .song-item:hover {
-  background-color: var(--color-surface);
+  background-color: var(--color-dark);
 }
 
 /* Modal */
@@ -339,8 +369,8 @@ body {
   background-color: #f3f3f3;
   margin: auto;
   padding: 6px;
-  border: 1px solid var(--color-primary);
-  border-radius: 12px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px var(--color-primary);
   width: 720px;
 }
 
@@ -438,16 +468,12 @@ h1 {
   transform: scale(1.5);
 }
 
-#boton-close:hover {
-  transform: scale(2);
-}
-
 .top-bar {
-  height: 16%;
+  height: 13%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 23px 21px;
+  padding: 0px 24px;
 }
 
 .search-container {
@@ -456,6 +482,8 @@ h1 {
 
 .search-container .search-bar {
   padding-left: 30px;
+  width: 180px;
+  height: 25px;
 }
 
 .search-container box-icon {
@@ -468,7 +496,6 @@ h1 {
 }
 
 .search-bar {
-  width: 234px;
   padding: 2px 16px;
   border-radius: 20px;
   border: none;
@@ -493,6 +520,7 @@ h1 {
 .pauseAdd {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 10px;
 }
 
@@ -522,7 +550,7 @@ h1 {
 .upload-button:hover,
 #add-button>box-icon:hover {
   transform: scale(1.2);
-  transition: transform 0.8s ease;
+  transition: transform 0.6s ease;
 }
 
 .form-group {
@@ -627,12 +655,12 @@ h1 {
 
   .scrollY {
     padding: 0;
-    height: 90%;
+    height: 88%;
   }
 
   .songs-header {
     grid-template-columns: 10px 1fr 1fr 70px 50px;
-    height: 10%;
+    height: 12%;
   }
 
   .song-item {
@@ -714,12 +742,12 @@ h1 {
 
   .scrollY {
     padding: 0;
-    height: 84%;
+    height: 80%;
   }
 
   .songs-header {
     grid-template-columns: 10px 1fr 1fr 70px 50px;
-    height: 15%;
+    height: 20%;
   }
 
   .song-item {
